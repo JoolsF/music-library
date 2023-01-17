@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  music-library-postgres:
+    image: postgres:12.8
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: test-username
+      POSTGRES_PASSWORD: test-password
+      POSTGRES_DB: test-db
+    ports:
+      - "5432:5432"
