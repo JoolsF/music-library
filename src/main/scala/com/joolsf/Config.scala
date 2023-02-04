@@ -8,16 +8,18 @@ import com.comcast.ip4s.{Host, IpLiteralSyntax, Port}
 case class Config(
   databaseConfig: DatabaseConfig,
   apiConfig: ApiConfig,
+  spotifyConfig: SpotifyConfig,
 )
 
 object Config {
 
   def load: IO[Config] =
-    (DatabaseConfig.load, ApiConfig.load)
-      .parMapN { case (databaseConfig, apiConfig) =>
+    (DatabaseConfig.load, ApiConfig.load, SpotifyConfig.load)
+      .parMapN { case (databaseConfig, apiConfig, spotifyConfig) =>
         Config(
           databaseConfig = databaseConfig,
           apiConfig = apiConfig,
+          spotifyConfig = spotifyConfig,
         )
       }
       .load[IO]
@@ -56,4 +58,14 @@ object DatabaseConfig {
         .as[Int]
         .default(40),
     ).parMapN(DatabaseConfig.apply)
+}
+
+case class SpotifyConfig(
+  clientId: String,
+)
+
+object SpotifyConfig {
+
+  def load: ConfigValue[Effect, SpotifyConfig] =
+    env("SPOTIFY_CLIENT_ID").as[String].map(SpotifyConfig.apply)
 }

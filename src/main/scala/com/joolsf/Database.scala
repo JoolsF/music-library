@@ -4,7 +4,7 @@ import cats.effect.syntax.all._
 import cats.effect.{IO, Resource}
 import cats.syntax.all._
 import com.joolsf.model.Foo
-import doobie.hikari.{HikariTransactor, Config => HikariConfig}
+import doobie.hikari.{Config => HikariConfig, HikariTransactor}
 import doobie.implicits._
 import doobie.{ExecutionContexts, Transactor, Update0}
 import org.flywaydb.core.Flyway

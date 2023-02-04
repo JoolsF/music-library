@@ -10,7 +10,7 @@ object Main extends IOApp.Simple {
 
   val run: IO[Unit] =
     resources.use { case (config, logger, db) =>
-      val server = Server(db, logger)
+      val server = Server(db, config, logger)
 
       server.run(config.apiConfig).void
 
